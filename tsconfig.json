@@ -31,7 +31,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		".contentlayer/generated"
+		".contentlayer/generated",
+		"src/components/ui/form.tsx"
 	],
 	"exclude": ["node_modules"]
 }
