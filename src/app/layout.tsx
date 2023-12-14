@@ -7,6 +7,7 @@ import { cn } from "@/src/lib/utils";
 import { Toaster } from "@/src/components/ui/toaster";
 import { TailwindIndicator } from "@/src/components/tailwind-indicator";
 import { ThemeProvider } from "@/src/components/theme-provider";
+import StoreProvider from "./StoreProvider";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -60,9 +61,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					defaultTheme="system"
 					enableSystem
 				>
-					{children}
-					<Toaster />
-					<TailwindIndicator />
+					<StoreProvider>
+						{children}
+						<Toaster />
+						<TailwindIndicator />
+					</StoreProvider>
 				</ThemeProvider>
 			</body>
 		</html>
