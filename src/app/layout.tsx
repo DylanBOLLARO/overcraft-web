@@ -1,3 +1,5 @@
+"use client";
+
 import { Inter as FontSans } from "next/font/google";
 import localFont from "next/font/local";
 
@@ -23,27 +25,6 @@ const fontHeading = localFont({
 interface RootLayoutProps {
 	children: React.ReactNode;
 }
-
-export const metadata = {
-	title: {
-		default: siteConfig.name,
-		template: `%s | ${siteConfig.name}`,
-	},
-	description: siteConfig.description,
-	keywords: [
-		"Next.js",
-		"React",
-		"Tailwind CSS",
-		"Server Components",
-		"Radix UI",
-	],
-	authors: [
-		{
-			name: "Vipalisk",
-		},
-	],
-	creator: "Vipalisk",
-};
 
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (

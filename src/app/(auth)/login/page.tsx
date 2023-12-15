@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
 import { buttonVariants } from "@/src/components/ui/button";
@@ -37,8 +36,15 @@ import {
 } from "@/src/components/ui/form";
 
 import * as z from "zod";
+import { useDispatch } from "react-redux";
+
+import { setCredentials } from "../../../redux/authSlice";
+import { useLoginMutation } from "../../../redux/authApiSlice";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+	const dispatch = useDispatch();
+	const router = useRouter();
 	const formSignin = z.object({
 		email: z.string().email(),
 		password: z.string().min(5),
@@ -67,8 +73,13 @@ export default function LoginPage() {
 		},
 	});
 
+	const [login, { isLoading }] = useLoginMutation();
+
 	async function onSigninSubmit(values: z.infer<typeof formSignin>) {
-		console.log("onSigninSubmit");
+		const { email, password } = values;
+		const userData = await login({ email, password }).unwrap();
+		dispatch(setCredentials({ ...userData, email }));
+		router.push("/");
 		// const { status, statusText, data }: any = await fetch(SIGNIN, {
 		// 	...values,
 		// });
@@ -129,6 +140,9 @@ export default function LoginPage() {
 					Back
 				</>
 			</Link>
+			<button type="button" onClick={() => router.push("/about")}>
+				Click me
+			</button>
 			<Tabs defaultValue="signin" className="w-[500px] bg-">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="signin">Sign in</TabsTrigger>

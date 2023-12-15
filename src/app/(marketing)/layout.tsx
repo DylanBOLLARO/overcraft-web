@@ -1,18 +1,24 @@
+"use client";
+
 import Link from "next/link";
 
 import { marketingConfig } from "@/src/config/marketing";
 import { cn } from "@/src/lib/utils";
-import { buttonVariants } from "@/src/components/ui/button";
+import { Button, buttonVariants } from "@/src/components/ui/button";
 import { MainNav } from "@/src/components/main-nav";
 import { ModeToggle } from "@/src/components/mode-toggle";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut, selectCurrentUser } from "../../redux/authSlice";
 
 interface MarketingLayoutProps {
 	children: React.ReactNode;
 }
 
-export default async function MarketingLayout({
-	children,
-}: MarketingLayoutProps) {
+export default function MarketingLayout({ children }: MarketingLayoutProps) {
+	const dispatch = useDispatch();
+	const user = useSelector(selectCurrentUser);
+	console.log(JSON.stringify(user));
+
 	return (
 		<div className="flex min-h-screen flex-col">
 			<header className="container z-40 bg-background">
@@ -20,20 +26,32 @@ export default async function MarketingLayout({
 					<MainNav items={marketingConfig.mainNav} />
 					<div className="flex flex-row gap-3">
 						<ModeToggle />
-						<nav>
-							<Link
-								href="/login"
-								className={cn(
-									buttonVariants({
-										variant: "secondary",
-										size: "sm",
-									}),
-									"px-4",
-								)}
+						{user ? (
+							<Button
+								variant="destructive"
+								size="sm"
+								onClick={() => {
+									dispatch(logOut({}));
+								}}
 							>
-								Login
-							</Link>
-						</nav>
+								<p className="p-0 m-0">{user.email}</p>
+							</Button>
+						) : (
+							<nav>
+								<Link
+									href="/login"
+									className={cn(
+										buttonVariants({
+											variant: "secondary",
+											size: "sm",
+										}),
+										"px-4",
+									)}
+								>
+									Login
+								</Link>
+							</nav>
+						)}
 					</div>
 				</div>
 			</header>
