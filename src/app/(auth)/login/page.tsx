@@ -140,9 +140,6 @@ export default function LoginPage() {
 					Back
 				</>
 			</Link>
-			<button type="button" onClick={() => router.push("/about")}>
-				Click me
-			</button>
 			<Tabs defaultValue="signin" className="w-[500px] bg-">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="signin">Sign in</TabsTrigger>
