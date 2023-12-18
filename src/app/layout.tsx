@@ -4,12 +4,12 @@ import { Inter as FontSans } from "next/font/google";
 import localFont from "next/font/local";
 
 import "@/src/styles/globals.css";
-import { siteConfig } from "@/src/config/site";
 import { cn } from "@/src/lib/utils";
 import { Toaster } from "@/src/components/ui/toaster";
 import { TailwindIndicator } from "@/src/components/tailwind-indicator";
 import { ThemeProvider } from "@/src/components/theme-provider";
 import StoreProvider from "./StoreProvider";
+import MainLayout from "./main-layout";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 			<head />
 			<body
 				className={cn(
-					"min-h-screen bg-background font-sans antialiased",
+					"h-[calc(100vh-49px)] bg-background font-sans antialiased",
 					fontSans.variable,
 					fontHeading.variable,
 				)}
@@ -43,7 +43,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					enableSystem
 				>
 					<StoreProvider>
-						{children}
+						<MainLayout />
+						<main className="flex flex-row h-full px-2 pb-2 gap-2">
+							{children}
+						</main>
 						<Toaster />
 						<TailwindIndicator />
 					</StoreProvider>

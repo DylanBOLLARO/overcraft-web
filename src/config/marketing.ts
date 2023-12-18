@@ -1,14 +1,15 @@
 import { MarketingConfig } from "@/src/types"
+import { pagePath } from "../constants/enum"
 
 export const marketingConfig: MarketingConfig = {
   mainNav: [
     {
       title: "Documentation",
-      href: "/",
+      href: pagePath.DOCUMENTATION,
     },
     {
       title: "Download",
-      href: "/",
+      href: pagePath.HOME,
     },
   ],
 }

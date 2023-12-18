@@ -7,18 +7,23 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { MainNavItem } from "@/src/types";
 import { siteConfig } from "@/src/config/site";
 import { cn } from "@/src/lib/utils";
+import { pagePath } from "../constants/enum";
 
 interface MainNavProps {
 	items?: MainNavItem[];
 	children?: React.ReactNode;
+	user: any;
 }
 
-export function MainNav({ items, children }: MainNavProps) {
+export function MainNav({ items, children, user }: MainNavProps) {
 	const segment = useSelectedLayoutSegment();
 
 	return (
 		<div className="flex gap-6 md:gap-10">
-			<Link href="/" className="hidden items-center space-x-2 md:flex">
+			<Link
+				href={`${pagePath.HOME}`}
+				className="hidden items-center space-x-2 md:flex"
+			>
 				<span className="hidden font-bold sm:inline-block">
 					{siteConfig.name}
 				</span>
@@ -41,6 +46,16 @@ export function MainNav({ items, children }: MainNavProps) {
 							{item.title}
 						</Link>
 					))}
+					{user.token && (
+						<Link
+							href={`${pagePath.DASHBOARD}`}
+							className={cn(
+								"flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm text-foreground/60",
+							)}
+						>
+							Dashboard
+						</Link>
+					)}
 				</nav>
 			) : null}
 		</div>

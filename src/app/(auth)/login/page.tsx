@@ -41,10 +41,14 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../../../redux/authSlice";
 import { useLoginMutation } from "../../../redux/authApiSlice";
 import { useRouter } from "next/navigation";
+import { pagePath } from "@/src/constants/enum";
+import { fetch } from "@/src/services/networking";
+import { SIGNUP } from "@/src/constants/api";
 
 export default function LoginPage() {
-	const dispatch = useDispatch();
 	const router = useRouter();
+	const dispatch = useDispatch();
+
 	const formSignin = z.object({
 		email: z.string().email(),
 		password: z.string().min(5),
@@ -76,10 +80,13 @@ export default function LoginPage() {
 	const [login, { isLoading }] = useLoginMutation();
 
 	async function onSigninSubmit(values: z.infer<typeof formSignin>) {
-		const { email, password } = values;
-		const userData = await login({ email, password }).unwrap();
-		dispatch(setCredentials({ ...userData, email }));
-		router.push("/");
+		try {
+			const { email, password } = values;
+			const userData = await login({ email, password }).unwrap();
+			dispatch(setCredentials({ ...userData, email }));
+			router.push(pagePath.DASHBOARD);
+		} catch (error) {}
+
 		// const { status, statusText, data }: any = await fetch(SIGNIN, {
 		// 	...values,
 		// });
@@ -102,6 +109,11 @@ export default function LoginPage() {
 
 	async function onSignupSubmit(values: z.infer<typeof formSignup>) {
 		console.log("onSignupSubmit");
+		try {
+			await fetch(SIGNUP, { ...values });
+
+			router.push(pagePath.DASHBOARD);
+		} catch (error) {}
 
 		// const { status, statusText } = await fetch(SIGNUP, { ...values });
 		// switch (status) {
@@ -127,12 +139,12 @@ export default function LoginPage() {
 	}
 
 	return (
-		<div className="container flex h-screen w-screen flex-col items-center justify-center">
+		<div className="container flex flex-col items-center">
 			<Link
-				href="/"
+				href={pagePath.HOME}
 				className={cn(
-					buttonVariants({ variant: "ghost" }),
-					"absolute left-4 top-4 md:left-8 md:top-8",
+					buttonVariants({ variant: "secondary" }),
+					"left-4 top-4 md:left-8 md:top-8 self-start",
 				)}
 			>
 				<>
