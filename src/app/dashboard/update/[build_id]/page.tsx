@@ -32,8 +32,8 @@ export default function Page({ params }: any) {
 
 	const [buildInfo, setBuildInfo] = useState();
 
-	async function fetch_build_info() {
-		const { listStep } = await get_info_build(params.build_id);
+	async function fetch_build_info(id: any) {
+		const { listStep } = await get_info_build(id);
 		setBuildInfo(
 			listStep.sort((a: any, b: any) => {
 				return a.position - b.position;
@@ -42,8 +42,8 @@ export default function Page({ params }: any) {
 	}
 
 	useEffect(() => {
-		fetch_build_info();
-	}, []);
+		fetch_build_info(params.build_id);
+	}, [params.build_id]);
 
 	const dispatch = useDispatch();
 

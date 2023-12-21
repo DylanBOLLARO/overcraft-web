@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  next-app:
+    build:
+      context: .
+    ports:
+      - 3000:3000
+
+  nginx:
+    build: /nginx/.
+    ports:
+      - "80:80"
+    depends_on:
+      - next-app
