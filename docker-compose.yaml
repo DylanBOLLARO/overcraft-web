@@ -8,8 +8,12 @@ services:
       - 3000:3000
 
   nginx:
-    build: /nginx/.
+    build: ./nginx/.
     ports:
       - "80:80"
     depends_on:
       - next-app
+    environment:
+      - NEXT_APP_NAME="${NEXT_APP_NAME}"
+      - NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL}"
+
