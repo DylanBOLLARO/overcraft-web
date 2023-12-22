@@ -1,19 +1,17 @@
 version: '3'
 
 services:
-  next-app:
+  nextjs:
     build:
       context: .
     ports:
       - 3000:3000
+    container_name: nextjs
 
   nginx:
     build: ./nginx/.
     ports:
       - "80:80"
     depends_on:
-      - next-app
-    environment:
-      - NEXT_APP_NAME="${NEXT_APP_NAME}"
-      - NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL}"
-
+      - nextjs
+    container_name: nginx
