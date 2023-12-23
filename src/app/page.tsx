@@ -7,8 +7,8 @@ import {
 } from "../lib/features/auth/authSlice";
 
 export default function IndexPage() {
-	const user = useSelector(selectCurrentUser);
-	const tokens = useSelector(selectCurrentTokens);
+	const user: any = useSelector(selectCurrentUser);
+	const tokens: any = useSelector(selectCurrentTokens);
 
 	const welcome = user
 		? `Welcome ${JSON.stringify(user.username)}!`

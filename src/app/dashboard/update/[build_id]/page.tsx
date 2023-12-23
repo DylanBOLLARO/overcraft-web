@@ -24,7 +24,6 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { get_info_build } from "@/src/services/networking";
-import { incrementByAmount } from "@/src/redux/counterSlice";
 import { useDispatch } from "react-redux";
 
 export default function Page({ params }: any) {
@@ -88,12 +87,12 @@ export default function Page({ params }: any) {
 								onClick={async () => {
 									router.push(pagePath.DASHBOARD);
 
-									await delete_build(params.build_id);
-									dispatch(
-										incrementByAmount(
-											await fetch_builds_list(),
-										),
-									);
+									// await delete_build(params.build_id);
+									// dispatch(
+									// 	incrementByAmount(
+									// 		await fetch_builds_list(),
+									// 	),
+									// );
 								}}
 							>
 								<Trash2 className="mr-2 h-4 w-4" />
