@@ -8,16 +8,16 @@ import { MainNavItem } from "@/src/types";
 import { siteConfig } from "@/src/config/site";
 import { cn } from "@/src/lib/utils";
 import { pagePath } from "../constants/enum";
+import { useSelector } from "react-redux";
+import {
+	selectCurrentTokens,
+	selectCurrentUser,
+} from "../lib/features/auth/authSlice";
 
-interface MainNavProps {
-	items?: MainNavItem[];
-	children?: React.ReactNode;
-	user: any;
-}
-
-export function MainNav({ items, children, user }: MainNavProps) {
+export function MainNav(items?: any) {
 	const segment = useSelectedLayoutSegment();
-
+	const user: any = useSelector(selectCurrentUser);
+	const tokens: any = useSelector(selectCurrentTokens);
 	return (
 		<div className="flex gap-6 md:gap-10">
 			<Link
@@ -30,7 +30,7 @@ export function MainNav({ items, children, user }: MainNavProps) {
 			</Link>
 			{items?.length ? (
 				<nav className="hidden gap-6 md:flex">
-					{items?.map((item, index) => (
+					{items?.map((item: any, index: number) => (
 						<Link
 							key={index}
 							href={item.disabled ? "#" : item.href}
@@ -46,7 +46,7 @@ export function MainNav({ items, children, user }: MainNavProps) {
 							{item.title}
 						</Link>
 					))}
-					{user.token && (
+					{user && tokens?.access_token && (
 						<Link
 							href={`${pagePath.DASHBOARD}`}
 							className={cn(

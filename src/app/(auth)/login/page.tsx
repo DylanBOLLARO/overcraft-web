@@ -38,12 +38,12 @@ import {
 import * as z from "zod";
 import { useDispatch } from "react-redux";
 
-import { setCredentials } from "../../../redux/authSlice";
-import { useLoginMutation } from "../../../redux/authApiSlice";
+import { setCredentials } from "../../../lib/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { pagePath } from "@/src/constants/enum";
 import { fetch } from "@/src/services/networking";
 import { SIGNUP } from "@/src/constants/api";
+import { useLoginMutation } from "@/src/services/auth";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -85,66 +85,28 @@ export default function LoginPage() {
 			const userData = await login({ email, password }).unwrap();
 			dispatch(setCredentials({ ...userData, email }));
 			router.push(pagePath.DASHBOARD);
-		} catch (error) {}
-
-		// const { status, statusText, data }: any = await fetch(SIGNIN, {
-		// 	...values,
-		// });
-		// switch (status) {
-		// 	case 201:
-		// 		dispatch(refresh(data));
-		// 		break;
-		// 	case 409:
-		// 		setAlert(true);
-		// 		setAlertData({
-		// 			type: "destructive",
-		// 			title: "Error",
-		// 			message: statusText,
-		// 		});
-		// 		break;
-		// 	default:
-		// 		break;
-		// }
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	async function onSignupSubmit(values: z.infer<typeof formSignup>) {
 		console.log("onSignupSubmit");
 		try {
 			await fetch(SIGNUP, { ...values });
-
 			router.push(pagePath.DASHBOARD);
-		} catch (error) {}
-
-		// const { status, statusText } = await fetch(SIGNUP, { ...values });
-		// switch (status) {
-		// 	case 201:
-		// 		setAlert(true);
-		// 		setAlertData({
-		// 			type: "default",
-		// 			title: "Succes",
-		// 			message: statusText,
-		// 		});
-		// 		break;
-		// 	case 409:
-		// 		setAlert(true);
-		// 		setAlertData({
-		// 			type: "destructive",
-		// 			title: "Error",
-		// 			message: statusText,
-		// 		});
-		// 		break;
-		// 	default:
-		// 		break;
-		// }
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	return (
-		<div className="container flex flex-col items-center">
+		<div className="container flex flex-col items-center gap-5">
 			<Link
 				href={pagePath.HOME}
 				className={cn(
 					buttonVariants({ variant: "secondary" }),
-					"left-4 top-4 md:left-8 md:top-8 self-start",
+					"self-start",
 				)}
 			>
 				<>

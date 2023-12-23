@@ -10,11 +10,9 @@ export enum STYLE_VIEW {
 }
 
 export enum pagePath {
-    // nav
     HOME = "/",
     DOCUMENTATION = "/documentation",
     DASHBOARD = "/dashboard/builds",
     SIGNIN = "/login",
-
     UPDATE = "/update",
 }

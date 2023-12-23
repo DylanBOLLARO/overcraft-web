@@ -15,30 +15,29 @@ import DialogCreationNewBuild from "@/src/components/DialogCreationNewBuild";
 import { STYLE_VIEW, VIEW, pagePath } from "@/src/constants/enum";
 import { fetch_builds_list } from "@/src/services/networking";
 import { useDispatch, useSelector } from "react-redux";
-import { incrementByAmount } from "@/src/redux/counterSlice";
-import { RootState } from "@/src/redux/store";
-import { selectCurrentToken } from "@/src/redux/authSlice";
 import { redirect } from "next/navigation";
 import { CardBuild } from "@/src/components/CardBuild";
+import { RootState } from "@/src/lib/store";
+import { selectCurrentTokens } from "@/src/lib/features/auth/authSlice";
 
 export default function Page() {
 	const dispatch = useDispatch();
-	const count = useSelector((state: RootState) => state.counter.value);
-	const token = useSelector(selectCurrentToken);
+	// const count = useSelector((state: RootState) => state.counter.value);
+	const tokens = useSelector(selectCurrentTokens);
 
 	const [isSquareView, setIsSquareView] = useState<string>(
 		STYLE_VIEW[STYLE_VIEW.SQUARE],
 	);
 
 	async function update_data() {
-		dispatch(incrementByAmount(await fetch_builds_list()));
+		// dispatch(incrementByAmount(await fetch_builds_list()));
 	}
 
-	if (!count) update_data();
+	// if (!count) update_data();
 
 	useEffect(() => {
-		if (!token) redirect(pagePath.SIGNIN);
-	}, [token]);
+		if (!tokens) redirect(pagePath.SIGNIN);
+	}, [tokens]);
 
 	useEffect(() => {}, [isSquareView]);
 
@@ -88,7 +87,7 @@ export default function Page() {
 								isSquareView ? "gap-1" : "gap-3"
 							}`}
 						>
-							{count.map((build: any) => (
+							{/* {count.map((build: any) => (
 								<CardBuild
 									styleView={isSquareView}
 									build={build}
@@ -97,7 +96,7 @@ export default function Page() {
 									width={150}
 									height={150}
 								/>
-							))}
+							))} */}
 						</div>
 					</ScrollArea>
 				</TabsContent>

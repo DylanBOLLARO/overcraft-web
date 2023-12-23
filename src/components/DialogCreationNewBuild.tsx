@@ -25,7 +25,6 @@ import {
 	FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { incrementByAmount } from "../redux/counterSlice";
 import { fetch, fetch_builds_list } from "../services/networking";
 import { useDispatch } from "react-redux";
 
@@ -52,7 +51,7 @@ const DialogCreationNewBuild = () => {
 			versusrace: "0",
 			User_id: "1",
 		});
-		dispatch(incrementByAmount(await fetch_builds_list()));
+		// dispatch(incrementByAmount(await fetch_builds_list()));
 		setOpen(false);
 		form.reset();
 	}

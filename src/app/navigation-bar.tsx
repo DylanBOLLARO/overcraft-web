@@ -8,11 +8,7 @@ import { Button, buttonVariants } from "@/src/components/ui/button";
 import { MainNav } from "@/src/components/main-nav";
 import { ModeToggle } from "@/src/components/mode-toggle";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	logOut,
-	selectCurrentUser,
-	selectCurrentToken,
-} from "../redux/authSlice";
+
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -25,24 +21,25 @@ import {
 	AlertDialogTrigger,
 } from "../components/ui/alert-dialog";
 import { pagePath } from "../constants/enum";
+import {
+	selectCurrentTokens,
+	selectCurrentUser,
+} from "../lib/features/auth/authSlice";
 
-export default function MainLayout() {
+export default function NavigationBar() {
 	const dispatch = useDispatch();
-	const user = useSelector(selectCurrentUser);
-	const token = useSelector(selectCurrentToken);
+	const user: any = useSelector(selectCurrentUser);
+	const tokens: any = useSelector(selectCurrentTokens);
 
 	return (
 		<div className="flex flex-col mb-2">
 			<header className="px-10 z-40 bg-background  border-b-[1px] border-muted-foreground/20">
 				<div className="flex h-10 items-center justify-between py-4">
-					<MainNav
-						items={marketingConfig.mainNav}
-						user={{ ...user, token }}
-					/>
+					<MainNav items={marketingConfig.mainNav} />
 					<div className="flex flex-row gap-3 items-center">
 						<ModeToggle />
 
-						{user ? (
+						{user && tokens?.access_token ? (
 							<AlertDialog>
 								<AlertDialogTrigger asChild>
 									<Button variant="outline" size={"xsm"}>
@@ -67,7 +64,7 @@ export default function MainLayout() {
 										</AlertDialogCancel>
 										<AlertDialogAction
 											onClick={() => {
-												dispatch(logOut({}));
+												// dispatch(logOut({}));
 											}}
 										>
 											Continue

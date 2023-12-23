@@ -1,14 +1,19 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import { selectCurrentUser, selectCurrentToken } from "../../redux/authSlice";
+import {
+	selectCurrentTokens,
+	selectCurrentUser,
+} from "../lib/features/auth/authSlice";
 
 export default function IndexPage() {
 	const user = useSelector(selectCurrentUser);
-	const token = useSelector(selectCurrentToken);
+	const tokens = useSelector(selectCurrentTokens);
 
-	const welcome = user ? `Welcome ${JSON.stringify(user)}!` : "Welcome!";
-	const tokenAbbr = `${token?.slice(0, 9)}...`;
+	const welcome = user
+		? `Welcome ${JSON.stringify(user.username)}!`
+		: "Welcome!";
+	const tokenAbbr = `${tokens?.access_token?.slice(0, 9)}...`;
 
 	return (
 		<section id="open-source" className="container py-8 md:py-12 lg:py-24">
