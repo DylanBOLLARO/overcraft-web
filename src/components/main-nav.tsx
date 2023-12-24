@@ -3,21 +3,12 @@
 import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-
-import { MainNavItem } from "@/src/types";
 import { siteConfig } from "@/src/config/site";
 import { cn } from "@/src/lib/utils";
 import { pagePath } from "../constants/enum";
-import { useSelector } from "react-redux";
-import {
-	selectCurrentTokens,
-	selectCurrentUser,
-} from "../lib/features/auth/authSlice";
 
-export function MainNav(items?: any) {
+export function MainNav({ items }: any) {
 	const segment = useSelectedLayoutSegment();
-	const user: any = useSelector(selectCurrentUser);
-	const tokens: any = useSelector(selectCurrentTokens);
 	return (
 		<div className="flex gap-6 md:gap-10">
 			<Link
@@ -28,8 +19,8 @@ export function MainNav(items?: any) {
 					{siteConfig.name}
 				</span>
 			</Link>
-			{items?.length ? (
-				<nav className="hidden gap-6 md:flex">
+			{items?.length && (
+				<nav className="flex gap-6 ">
 					{items?.map((item: any, index: number) => (
 						<Link
 							key={index}
@@ -46,18 +37,17 @@ export function MainNav(items?: any) {
 							{item.title}
 						</Link>
 					))}
-					{user && tokens?.access_token && (
-						<Link
-							href={`${pagePath.DASHBOARD}`}
-							className={cn(
-								"flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm text-foreground/60",
-							)}
-						>
-							Dashboard
-						</Link>
-					)}
+
+					<Link
+						href={`${pagePath.DASHBOARD}`}
+						className={cn(
+							"flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm text-foreground/60",
+						)}
+					>
+						Dashboard
+					</Link>
 				</nav>
-			) : null}
+			)}
 		</div>
 	);
 }

@@ -18,7 +18,6 @@ import {
 
 import { Input } from "@/src/components/ui/input";
 
-import { Label } from "@/src/components/ui/label";
 import {
 	Tabs,
 	TabsContent,
@@ -36,18 +35,17 @@ import {
 } from "@/src/components/ui/form";
 
 import * as z from "zod";
-import { useDispatch } from "react-redux";
-
-import { setCredentials } from "../../../lib/features/auth/authSlice";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { pagePath } from "@/src/constants/enum";
-import { fetch } from "@/src/services/networking";
+import { fetchCustom } from "@/src/services/networking";
 import { SIGNUP } from "@/src/constants/api";
 import { useLoginMutation } from "@/src/services/auth";
+import { useEffect, useState } from "react";
+import { create, getCookie } from "../../actions";
 
 export default function LoginPage() {
 	const router = useRouter();
-	const dispatch = useDispatch();
+	const [isLoading, setIsLoading] = useState(true);
 
 	const formSignin = z.object({
 		email: z.string().email(),
@@ -77,13 +75,16 @@ export default function LoginPage() {
 		},
 	});
 
-	const [login, { isLoading }] = useLoginMutation();
+	const [login] = useLoginMutation();
 
 	async function onSigninSubmit(values: z.infer<typeof formSignin>) {
 		try {
 			const { email, password } = values;
 			const userData = await login({ email, password }).unwrap();
-			dispatch(setCredentials({ ...userData, email }));
+			await create({
+				name: "overcraft_jwt",
+				value: userData?.tokens?.access_token,
+			});
 			router.push(pagePath.DASHBOARD);
 		} catch (error) {
 			console.log(error);
@@ -93,12 +94,22 @@ export default function LoginPage() {
 	async function onSignupSubmit(values: z.infer<typeof formSignup>) {
 		console.log("onSignupSubmit");
 		try {
-			await fetch(SIGNUP, { ...values });
-			router.push(pagePath.DASHBOARD);
+			await fetchCustom(SIGNUP, { ...values });
 		} catch (error) {
 			console.log(error);
 		}
 	}
+
+	useEffect(() => {
+		(async () => {
+			const cookie = await getCookie();
+			if (cookie) {
+				router.push(pagePath.DASHBOARD);
+				return;
+			}
+			setIsLoading(false);
+		})();
+	}, []);
 
 	return (
 		<div className="container flex flex-col items-center gap-5">

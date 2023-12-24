@@ -9,7 +9,9 @@ import { Toaster } from "@/src/components/ui/toaster";
 import { TailwindIndicator } from "@/src/components/tailwind-indicator";
 import { ThemeProvider } from "@/src/components/theme-provider";
 import StoreProvider from "./StoreProvider";
-import NavigationBar from "./navigation-bar";
+import { useEffect, useState } from "react";
+import Navigation from "./navigation";
+import { getCookie } from "./actions";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -27,6 +29,15 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
+	const [cookie, setCookie] = useState<any>(null);
+	const [isLoading, setIsLoading] = useState(true);
+	useEffect(() => {
+		(async () => {
+			setCookie(await getCookie());
+		})();
+		setIsLoading(false);
+	});
+
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head />
@@ -43,9 +54,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					enableSystem
 				>
 					<StoreProvider>
-						<NavigationBar />
-						<main className="flex flex-row h-full px-2 pb-2 gap-2">
-							{children}
+						<Navigation cookie={cookie} />
+						<main className="flex flex-row px-2 pb-2 gap-2">
+							{isLoading ? <p>Loading...</p> : children}
 						</main>
 						<Toaster />
 						<TailwindIndicator />

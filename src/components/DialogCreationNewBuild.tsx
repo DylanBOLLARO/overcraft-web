@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { PUBLISH_BUILD } from "../constants/api";
-// import { fetch } from "../services/networking";
 import {
 	Dialog,
 	DialogContent,
@@ -25,7 +24,7 @@ import {
 	FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { fetch, fetch_builds_list } from "../services/networking";
+import { fetchCustom, fetch_builds_list } from "../services/networking";
 import { useDispatch } from "react-redux";
 
 const formSchema = z.object({
@@ -44,7 +43,7 @@ const DialogCreationNewBuild = () => {
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		await fetch(PUBLISH_BUILD, {
+		await fetchCustom(PUBLISH_BUILD, {
 			title: values.username,
 			desc: values.username,
 			playrace: "0",

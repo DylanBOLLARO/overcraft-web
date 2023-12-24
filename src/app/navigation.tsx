@@ -5,9 +5,7 @@ import Link from "next/link";
 import { marketingConfig } from "@/src/config/marketing";
 import { cn } from "@/src/lib/utils";
 import { Button, buttonVariants } from "@/src/components/ui/button";
-import { MainNav } from "@/src/components/main-nav";
 import { ModeToggle } from "@/src/components/mode-toggle";
-import { useDispatch, useSelector } from "react-redux";
 
 import {
 	AlertDialog,
@@ -21,15 +19,12 @@ import {
 	AlertDialogTrigger,
 } from "../components/ui/alert-dialog";
 import { pagePath } from "../constants/enum";
-import {
-	selectCurrentTokens,
-	selectCurrentUser,
-} from "../lib/features/auth/authSlice";
+import { MainNav } from "../components/main-nav";
+import { useRouter } from "next/navigation";
+import { deleteCookie } from "./actions";
 
-export default function NavigationBar() {
-	const dispatch = useDispatch();
-	const user: any = useSelector(selectCurrentUser);
-	const tokens: any = useSelector(selectCurrentTokens);
+export default function NavigationBar({ cookie }: any) {
+	const router = useRouter();
 
 	return (
 		<div className="flex flex-col mb-2">
@@ -38,12 +33,11 @@ export default function NavigationBar() {
 					<MainNav items={marketingConfig.mainNav} />
 					<div className="flex flex-row gap-3 items-center">
 						<ModeToggle />
-
-						{user && tokens?.access_token ? (
+						{cookie ? (
 							<AlertDialog>
 								<AlertDialogTrigger asChild>
 									<Button variant="outline" size={"xsm"}>
-										{user.email}
+										logout
 									</Button>
 								</AlertDialogTrigger>
 								<AlertDialogContent>
@@ -63,8 +57,9 @@ export default function NavigationBar() {
 											Cancel
 										</AlertDialogCancel>
 										<AlertDialogAction
-											onClick={() => {
-												// dispatch(logOut({}));
+											onClick={async () => {
+												await deleteCookie();
+												router.push(pagePath.SIGNIN);
 											}}
 										>
 											Continue
@@ -73,19 +68,17 @@ export default function NavigationBar() {
 								</AlertDialogContent>
 							</AlertDialog>
 						) : (
-							<nav>
-								<Link
-									href={pagePath.SIGNIN}
-									className={cn(
-										buttonVariants({
-											variant: "secondary",
-											size: "xsm",
-										}),
-									)}
-								>
-									Login
-								</Link>
-							</nav>
+							<Link
+								href={pagePath.SIGNIN}
+								className={cn(
+									buttonVariants({
+										variant: "secondary",
+										size: "xsm",
+									}),
+								)}
+							>
+								Login
+							</Link>
 						)}
 					</div>
 				</div>
