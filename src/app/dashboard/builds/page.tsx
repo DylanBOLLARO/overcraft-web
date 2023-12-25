@@ -11,14 +11,28 @@ import {
 } from "@/src/components/ui/tabs";
 import { Grid2X2, Menu, RefreshCcw } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import DialogCreationNewBuild from "@/src/components/DialogCreationNewBuild";
 import { STYLE_VIEW, VIEW, pagePath } from "@/src/constants/enum";
 
+import { useRouter } from "next/navigation";
+import { CardBuild } from "@/src/components/CardBuild";
+import { get_connected_user_builds } from "@/src/utils/networking";
+import DialogCreationNewBuild from "@/src/components/DialogCreationNewBuild";
+
 export default function Page() {
+	const [userBuilds, setUserBuilds] = useState<any>(null);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				setUserBuilds(await get_connected_user_builds());
+			} catch (error: any) {}
+		})();
+	}, []);
+
 	return (
-		<div className="flex-1 flex flex-row gap-3">
+		<div className="flex flex-row flex-1 h-full gap-3">
 			<Sidebar />
-			<Tabs defaultValue={`${VIEW.BUILD}`} className="flex-1 py-2">
+			<Tabs defaultValue={`${VIEW.BUILD}`} className="flex-1 py-2 ">
 				<div className="flex flex-row gap-5">
 					<TabsList>
 						<TabsTrigger
@@ -31,16 +45,11 @@ export default function Page() {
 							Drafts
 						</TabsTrigger>
 					</TabsList>
-					{/* <Button variant={"outline"} onClick={update_data}>
+					<Button variant={"outline"}>
 						<RefreshCcw className=" h-4 w-4" />
-					</Button> */}
+					</Button>
 					<DialogCreationNewBuild />
-					{/* <Tabs
-						defaultValue={isSquareView}
-						onValueChange={(e: any) => {
-							setIsSquareView(STYLE_VIEW[e]);
-						}}
-					>
+					<Tabs defaultValue={STYLE_VIEW[STYLE_VIEW.SQUARE]}>
 						<TabsList>
 							<TabsTrigger value={STYLE_VIEW[STYLE_VIEW.SQUARE]}>
 								<Grid2X2 className="h-5 w-5" />
@@ -49,29 +58,31 @@ export default function Page() {
 								<Menu className="h-5 w-5" />
 							</TabsTrigger>
 						</TabsList>
-					</Tabs> */}
+					</Tabs>
 				</div>
 				<TabsContent
 					value={`${VIEW.BUILD}`}
 					className="h-[calc(100%-49px)]"
 				>
-					<ScrollArea className="rounded-md border h-full p-1">
-						{/* <div
-							className={`flex flex-wrap justify-start ${
-								isSquareView ? "gap-1" : "gap-3"
-							}`}
-						>
-							{count.map((build: any) => (
-								<CardBuild
-									styleView={isSquareView}
-									build={build}
-									key={build.id}
-									aspectRatio="square"
-									width={150}
-									height={150}
-								/>
-							))}
-						</div> */}
+					<ScrollArea className="border rounded h-full">
+						<div className="flex flex-col gap-3 p-1">
+							{userBuilds?.length > 0 ? (
+								userBuilds.map((build: any) => {
+									return (
+										<CardBuild
+											build={build}
+											key={build.id}
+											width={150}
+											height={150}
+										/>
+									);
+								})
+							) : (
+								<p className="p-5">
+									You have not yet created a build order.
+								</p>
+							)}
+						</div>
 					</ScrollArea>
 				</TabsContent>
 			</Tabs>

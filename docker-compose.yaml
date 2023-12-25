@@ -7,6 +7,7 @@ services:
     ports:
       - 3000:3000
     container_name: nextjs
+    restart: always
 
   nginx:
     build: ./nginx/.
@@ -15,3 +16,4 @@ services:
     depends_on:
       - nextjs
     container_name: nginx
+    restart: always

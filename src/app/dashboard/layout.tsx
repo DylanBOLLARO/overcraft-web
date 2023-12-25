@@ -1,10 +1,8 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import { getCookie } from "../actions";
+import { deleteCookie, get_connected_user_id } from "../../utils/networking";
 import { pagePath } from "@/src/constants/enum";
-import { useRouter } from "next/navigation";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 export default function DashboardLayout({
 	children,
 }: {
@@ -12,17 +10,19 @@ export default function DashboardLayout({
 }) {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(true);
+	const pathname = usePathname();
 
 	useEffect(() => {
 		(async () => {
-			const cookie = await getCookie();
-			if (!cookie) {
-				router.push(pagePath.SIGNIN);
-				return;
-			}
+			const user_id = await get_connected_user_id();
+			if (!user_id) router.push(pagePath.SIGNIN);
 			setIsLoading(false);
 		})();
-	}, []);
+	}, [pathname]);
 
-	return <> {isLoading ? <p>Loading...</p> : children}</>;
+	return isLoading ? (
+		<p>Loading...</p>
+	) : (
+		<main className="flex-1">{children}</main>
+	);
 }

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { cn } from "@/src/lib/utils";
+import { cn } from "@/src/utils/utils";
 import { useRouter } from "next/navigation";
 
 export function CardBuild({
@@ -14,16 +14,15 @@ export function CardBuild({
 	return (
 		<div
 			className={cn(
-				"flex  hover:bg-muted p-2 rounded-lg cursor-pointer gap-3 w-32",
+				"flex flex-1 flex-row hover:bg-muted p-2 cursor-pointer gap-3 rounded",
 				className,
-				!styleView ? "flex-row w-full" : "flex-col",
 			)}
 			{...props}
 			onClick={() => {
 				router.push(`/dashboard/update/${build.id}`);
 			}}
 		>
-			<div className="overflow-hidden rounded-md">
+			<div className="overflow-hidden rounded">
 				<Image
 					src={
 						"https://w0.peakpx.com/wallpaper/816/229/HD-wallpaper-francisco-joel-on-starcraft-starcraft-starcraft-2-space-warriors-starcraft-2-marine.jpg"
@@ -33,7 +32,7 @@ export function CardBuild({
 					height={height}
 					className={cn(
 						"h-auto w-auto object-cover transition-all hover:scale-105 aspect-square ",
-						!styleView && "w-10 h10",
+						!styleView && "w-12 h12",
 					)}
 				/>
 			</div>

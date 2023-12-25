@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { cn } from "@/src/lib/utils";
+import { cn } from "@/src/utils/utils";
 import { buttonVariants } from "@/src/components/ui/button";
 import { Icons } from "@/src/components/icons";
 import { Button } from "@/src/components/ui/button";
@@ -35,17 +35,30 @@ import {
 } from "@/src/components/ui/form";
 
 import * as z from "zod";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { pagePath } from "@/src/constants/enum";
-import { fetchCustom } from "@/src/services/networking";
-import { SIGNUP } from "@/src/constants/api";
-import { useLoginMutation } from "@/src/services/auth";
 import { useEffect, useState } from "react";
-import { create, getCookie } from "../../actions";
+import {
+	get_connected_user_id,
+	signin,
+	signup,
+} from "../../../utils/networking";
 
 export default function LoginPage() {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const user_id = await get_connected_user_id();
+				if (user_id) router.push(pagePath.DASHBOARD);
+			} catch (error) {
+				console.log(error);
+			}
+			setIsLoading(false);
+		})();
+	}, []);
 
 	const formSignin = z.object({
 		email: z.string().email(),
@@ -75,43 +88,25 @@ export default function LoginPage() {
 		},
 	});
 
-	const [login] = useLoginMutation();
-
 	async function onSigninSubmit(values: z.infer<typeof formSignin>) {
-		try {
-			const { email, password } = values;
-			const userData = await login({ email, password }).unwrap();
-			await create({
-				name: "overcraft_jwt",
-				value: userData?.tokens?.access_token,
-			});
-			router.push(pagePath.DASHBOARD);
-		} catch (error) {
-			console.log(error);
-		}
+		await signin(values);
+		router.push(pagePath.DASHBOARD);
 	}
 
 	async function onSignupSubmit(values: z.infer<typeof formSignup>) {
-		console.log("onSignupSubmit");
 		try {
-			await fetchCustom(SIGNUP, { ...values });
-		} catch (error) {
-			console.log(error);
-		}
+			const tokens: any = await signup(values);
+			if (!tokens)
+				throw new Error(
+					"No tokens returned by the API during connection; authentication not possible.",
+				);
+			router.push(pagePath.DASHBOARD);
+		} catch (error) {}
 	}
 
-	useEffect(() => {
-		(async () => {
-			const cookie = await getCookie();
-			if (cookie) {
-				router.push(pagePath.DASHBOARD);
-				return;
-			}
-			setIsLoading(false);
-		})();
-	}, []);
-
-	return (
+	return isLoading ? (
+		<p>Loading...</p>
+	) : (
 		<div className="container flex flex-col items-center gap-5">
 			<Link
 				href={pagePath.HOME}

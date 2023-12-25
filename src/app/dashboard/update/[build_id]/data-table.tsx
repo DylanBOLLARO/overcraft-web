@@ -22,7 +22,7 @@ import {
 	delete_line,
 	swap_line_down,
 	swap_line_up,
-} from "@/src/services/networking";
+} from "@/src/utils/networking";
 import { Input } from "@/src/components/ui/input";
 import { useState } from "react";
 

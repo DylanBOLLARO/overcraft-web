@@ -1,25 +1,28 @@
+import { MODULE_NESTJS, SERVICE_AUTH_MODULE, SERVICE_BUILD_MODULE, VERBES_HTTP } from "./enum";
+
 export const SIGNUP = {
-    method: "post",
-    url: "/auth/signup",
-    form: {}
+    method: VERBES_HTTP.POST,
+    url: `${MODULE_NESTJS.AUTH}${SERVICE_AUTH_MODULE.SIGNUP}`,
 };
 
 export const SIGNIN = {
-    method: "post",
-    url: "/auth/signin",
-    form: {}
+    method: VERBES_HTTP.POST,
+    url: `${MODULE_NESTJS.AUTH}${SERVICE_AUTH_MODULE.SIGNIN}`,
 };
 
-export const GET_ALL_BUILDS_OF_USER = {
-    method: "post",
-    url: "/build-order/get-all-build",
-    form: {}
+export const GET_CONNECTED_USER_ID = {
+    method: VERBES_HTTP.POST,
+    url: `${MODULE_NESTJS.AUTH}${SERVICE_AUTH_MODULE.GET_CONNECTED_USER_ID}`,
 };
 
-export const PUBLISH_BUILD = {
-    method: "post",
-    url: "/build-order/new-build",
-    form: {}
+export const GET_CONNECTED_USER_BUILDS = {
+    method: VERBES_HTTP.POST,
+    url: `${MODULE_NESTJS.BUILD}${SERVICE_BUILD_MODULE.GET_CONNECTED_USER_BUILDS}`,
+};
+
+export const PUBLISH_CONNECTED_USER_BUILD = {
+    method: VERBES_HTTP.POST,
+    url: `${MODULE_NESTJS.BUILD}`,
 };
 
 export const GET_ALL_STEPS_OF_BUILD = {
@@ -65,3 +68,4 @@ export const DELETE_BUILD = {
     url: "/build-order/delete-build",
     form: {}
 };
+

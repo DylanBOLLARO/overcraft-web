@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
-import { PUBLISH_BUILD } from "../constants/api";
 import {
 	Dialog,
 	DialogContent,
@@ -24,33 +23,32 @@ import {
 	FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { fetchCustom, fetch_builds_list } from "../services/networking";
-import { useDispatch } from "react-redux";
+import { publish_connected_user_build } from "../utils/networking";
 
 const formSchema = z.object({
-	username: z.string().min(2).max(50),
+	name: z.string().min(2).max(50),
 });
 
 const DialogCreationNewBuild = () => {
 	const [open, setOpen] = React.useState(false);
-	const dispatch = useDispatch();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			username: "",
+			name: "",
 		},
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		await fetchCustom(PUBLISH_BUILD, {
-			title: values.username,
-			desc: values.username,
-			playrace: "0",
-			versusrace: "0",
-			User_id: "1",
-		});
-		// dispatch(incrementByAmount(await fetch_builds_list()));
+		const { name: name_of_build } = values;
+		await publish_connected_user_build(name_of_build);
+		// await fetchCustom(PUBLISH_BUILD, {
+		// 	title: values.username,
+		// 	desc: values.username,
+		// 	playrace: "0",
+		// 	versusrace: "0",
+		// 	User_id: "1",
+		// });
 		setOpen(false);
 		form.reset();
 	}
@@ -79,7 +77,7 @@ const DialogCreationNewBuild = () => {
 						</DialogHeader>
 						<FormField
 							control={form.control}
-							name="username"
+							name="name"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Name</FormLabel>
