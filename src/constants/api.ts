@@ -1,4 +1,4 @@
-import { MODULE_NESTJS, SERVICE_AUTH_MODULE, SERVICE_BUILD_MODULE, VERBES_HTTP } from "./enum";
+import { MODULE_NESTJS, SERVICE_AUTH_MODULE, VERBES_HTTP } from "./enum";
 
 export const SIGNUP = {
     method: VERBES_HTTP.POST,
@@ -16,8 +16,8 @@ export const GET_CONNECTED_USER_ID = {
 };
 
 export const GET_CONNECTED_USER_BUILDS = {
-    method: VERBES_HTTP.POST,
-    url: `${MODULE_NESTJS.BUILD}${SERVICE_BUILD_MODULE.GET_CONNECTED_USER_BUILDS}`,
+    method: VERBES_HTTP.GET,
+    url: `${MODULE_NESTJS.BUILD}`,
 };
 
 export const PUBLISH_CONNECTED_USER_BUILD = {
@@ -25,47 +25,27 @@ export const PUBLISH_CONNECTED_USER_BUILD = {
     url: `${MODULE_NESTJS.BUILD}`,
 };
 
-export const GET_ALL_STEPS_OF_BUILD = {
-    method: "post",
-    url: "/build-order/get-all-lines",
-    form: {}
+export const GET_ALL_STEPS_OF_BUILD_BY_BUILD_ID = {
+    method: VERBES_HTTP.GET,
+    url: `${MODULE_NESTJS.BUILD_STEP}`,
 };
 
-export const SWAP_LINE_UP = {
-    method: "post",
-    url: "/build-order/swap-line-up",
-    form: {}
-};
-
-
-export const SWAP_LINE_DOWN = {
-    method: "post",
-    url: "/build-order/swap-line-down",
-    form: {}
-};
-
-
-export const DELETE_LINE = {
-    method: "post",
-    url: "/build-order/delete-line",
-    form: {}
-};
-
-export const GET_INFO_BUILD = {
-    method: "post",
-    url: "/build-order/get-info-build",
-    form: {}
-};
-
-export const ADD_NEW_LINE = {
-    method: "post",
-    url: "/build-order/add-line",
-    form: {}
+export const ADD_STEP_OF_BUILD = {
+    method: VERBES_HTTP.POST,
+    url: `${MODULE_NESTJS.BUILD_STEP}`,
 };
 
 export const DELETE_BUILD = {
-    method: "post",
-    url: "/build-order/delete-build",
-    form: {}
+    method: VERBES_HTTP.DELETE,
+    url: `${MODULE_NESTJS.BUILD}`,
 };
 
+export const MOVE_STEP_IN_BUILD_STEPS = {
+    method: VERBES_HTTP.PATCH,
+    url: `${MODULE_NESTJS.BUILD_STEP}/move-position`,
+};
+
+export const DELETE_STEP_IN_BUILD_STEPS = {
+    method: VERBES_HTTP.DELETE,
+    url: `${MODULE_NESTJS.BUILD_STEP}`,
+};

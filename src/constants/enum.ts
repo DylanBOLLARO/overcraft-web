@@ -27,12 +27,7 @@ export enum MODULE_NESTJS {
     BUILD = "/build",
     AUTH = '/auth',
     USER = "/user",
-    BUILD_STEP = "/build_step"
-}
-
-export enum SERVICE_BUILD_MODULE {
-    GET_CONNECTED_USER_BUILDS = "/me",
-    PUBLISH_CONNECTED_USER_BUILD = "/me",
+    BUILD_STEP = "/step"
 }
 
 export enum SERVICE_AUTH_MODULE {
@@ -40,9 +35,3 @@ export enum SERVICE_AUTH_MODULE {
     SIGNIN = "/signin",
     GET_CONNECTED_USER_ID = "/get-connected-user-id",
 }
-
-export enum SERVICE_USER_MODULE { }
-
-export enum SERVICE_BUILD_STEP_MODULE { }
-
-

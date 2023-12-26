@@ -23,7 +23,7 @@ import { MainNav } from "../components/main-nav";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "../utils/networking";
 
-export default function NavigationBar({ cookie }: any) {
+export default function NavigationBar({ userId }: any) {
 	const router = useRouter();
 
 	return (
@@ -33,7 +33,7 @@ export default function NavigationBar({ cookie }: any) {
 					<MainNav items={marketingConfig.mainNav} />
 					<div className="flex flex-row gap-3 items-center">
 						<ModeToggle />
-						{cookie ? (
+						{userId ? (
 							<AlertDialog>
 								<AlertDialogTrigger asChild>
 									<Button variant="outline" size={"xsm"}>

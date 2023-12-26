@@ -20,11 +20,25 @@ import DialogCreationNewBuild from "@/src/components/DialogCreationNewBuild";
 
 export default function Page() {
 	const [userBuilds, setUserBuilds] = useState<any>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const local_refresh_builds = async () => {
+		try {
+			setIsLoading(true);
+			setUserBuilds(await get_connected_user_builds());
+		} catch (error) {
+			console.error("Error fetching user builds:", error);
+		} finally {
+			setTimeout(() => {
+				setIsLoading(false);
+			}, 1000);
+		}
+	};
 
 	useEffect(() => {
 		(async () => {
 			try {
-				setUserBuilds(await get_connected_user_builds());
+				local_refresh_builds();
 			} catch (error: any) {}
 		})();
 	}, []);
@@ -41,39 +55,37 @@ export default function Page() {
 						>
 							Builds
 						</TabsTrigger>
-						<TabsTrigger value={`${VIEW.DRAFT}`}>
+						<TabsTrigger value={`${VIEW.DRAFT}`} disabled>
 							Drafts
 						</TabsTrigger>
 					</TabsList>
-					<Button variant={"outline"}>
-						<RefreshCcw className=" h-4 w-4" />
+					<Button variant={"outline"} onClick={local_refresh_builds}>
+						<RefreshCcw
+							className={`h-4 w-4 ${
+								isLoading &&
+								"animate-spin animate-once animate-reverse"
+							}`}
+						/>
 					</Button>
-					<DialogCreationNewBuild />
-					<Tabs defaultValue={STYLE_VIEW[STYLE_VIEW.SQUARE]}>
-						<TabsList>
-							<TabsTrigger value={STYLE_VIEW[STYLE_VIEW.SQUARE]}>
-								<Grid2X2 className="h-5 w-5" />
-							</TabsTrigger>
-							<TabsTrigger value={STYLE_VIEW[STYLE_VIEW.LINE]}>
-								<Menu className="h-5 w-5" />
-							</TabsTrigger>
-						</TabsList>
-					</Tabs>
+					<DialogCreationNewBuild
+						local_refresh_builds={local_refresh_builds}
+					/>
 				</div>
 				<TabsContent
 					value={`${VIEW.BUILD}`}
 					className="h-[calc(100%-49px)]"
 				>
 					<ScrollArea className="border rounded h-full">
-						<div className="flex flex-col gap-3 p-1">
+						<div className="flex flex-col gap-1 p-1">
 							{userBuilds?.length > 0 ? (
 								userBuilds.map((build: any) => {
 									return (
 										<CardBuild
+											className={`animate-fade animate-once animate-duration-300`}
 											build={build}
 											key={build.id}
-											width={150}
-											height={150}
+											width={120}
+											height={120}
 										/>
 									);
 								})

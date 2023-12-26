@@ -10,7 +10,14 @@ import { TailwindIndicator } from "@/src/components/tailwind-indicator";
 import { ThemeProvider } from "@/src/components/theme-provider";
 import { useEffect, useState } from "react";
 import Navigation from "./navigation";
-import { getCookie } from "../utils/networking";
+import {
+	deleteCookie,
+	getCookie,
+	get_connected_user_id,
+} from "../utils/networking";
+import { usePathname } from "next/navigation";
+import router from "next/router";
+import { pagePath } from "../constants/enum";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -28,14 +35,20 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-	const [cookie, setCookie] = useState<any>(null);
+	const [userId, setUserId] = useState<any>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const pathname = usePathname();
+
 	useEffect(() => {
 		(async () => {
-			setCookie(await getCookie());
+			const user_id = await get_connected_user_id();
+			setUserId(await user_id);
+			if (!user_id) {
+				await deleteCookie();
+			}
 		})();
 		setIsLoading(false);
-	});
+	}, [userId, pathname]);
 
 	return (
 		<html lang="en" suppressHydrationWarning>
@@ -52,8 +65,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					defaultTheme="system"
 					enableSystem
 				>
-					<Navigation cookie={cookie} />
-					<main className="flex flex-row px-2 pb-2 gap-2 h-full ">
+					<Navigation userId={userId} />
+					<main className="flex flex-row px-2 pb-2 gap-2 h-full">
 						{isLoading ? <p>Loading...</p> : children}
 					</main>
 					<Toaster />

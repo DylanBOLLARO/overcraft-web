@@ -27,12 +27,11 @@ export function CardBuild({
 					src={
 						"https://w0.peakpx.com/wallpaper/816/229/HD-wallpaper-francisco-joel-on-starcraft-starcraft-starcraft-2-space-warriors-starcraft-2-marine.jpg"
 					}
-					alt={"https://github.com/shadcn.png"}
+					alt={""}
 					width={width}
 					height={height}
 					className={cn(
-						"h-auto w-auto object-cover transition-all hover:scale-105 aspect-square ",
-						!styleView && "w-12 h12",
+						"object-cover transition-all hover:scale-105 w-10 h-10",
 					)}
 				/>
 			</div>

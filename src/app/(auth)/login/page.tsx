@@ -39,6 +39,7 @@ import { useRouter } from "next/navigation";
 import { pagePath } from "@/src/constants/enum";
 import { useEffect, useState } from "react";
 import {
+	deleteCookie,
 	get_connected_user_id,
 	signin,
 	signup,
@@ -52,7 +53,11 @@ export default function LoginPage() {
 		(async () => {
 			try {
 				const user_id = await get_connected_user_id();
-				if (user_id) router.push(pagePath.DASHBOARD);
+				if (user_id) {
+					router.push(pagePath.DASHBOARD);
+					return;
+				}
+				await deleteCookie();
 			} catch (error) {
 				console.log(error);
 			}

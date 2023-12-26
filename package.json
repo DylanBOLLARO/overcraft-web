@@ -44,6 +44,7 @@
 		"axios": "^1.6.2",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.0.0",
+		"embla-carousel-react": "^8.0.0-rc17",
 		"lucide-react": "^0.295.0",
 		"next": "14.0.4",
 		"next-auth": "^4.24.5",
@@ -56,6 +57,7 @@
 		"redux-persist": "^6.0.0",
 		"tailwind-merge": "^2.1.0",
 		"tailwindcss-animate": "^1.0.7",
+		"tailwindcss-animated": "^1.0.1",
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {

@@ -29,7 +29,7 @@ const formSchema = z.object({
 	name: z.string().min(2).max(50),
 });
 
-const DialogCreationNewBuild = () => {
+const DialogCreationNewBuild = ({ local_refresh_builds }: any) => {
 	const [open, setOpen] = React.useState(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -41,15 +41,14 @@ const DialogCreationNewBuild = () => {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		const { name: name_of_build } = values;
-		await publish_connected_user_build(name_of_build);
-		// await fetchCustom(PUBLISH_BUILD, {
-		// 	title: values.username,
-		// 	desc: values.username,
-		// 	playrace: "0",
-		// 	versusrace: "0",
-		// 	User_id: "1",
-		// });
+		await publish_connected_user_build({
+			title: name_of_build,
+			description: name_of_build,
+			race: "ZERG",
+			v_race: "TERRAN",
+		});
 		setOpen(false);
+		local_refresh_builds();
 		form.reset();
 	}
 
@@ -58,7 +57,7 @@ const DialogCreationNewBuild = () => {
 			<DialogTrigger asChild>
 				<Button variant="outline">
 					<PlusCircle className="mr-2 h-4 w-4" />
-					Add build order
+					Add build
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
