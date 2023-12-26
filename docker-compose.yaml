@@ -8,12 +8,23 @@ services:
       - 3000:3000
     container_name: nextjs
     restart: always
+    networks:
+      - overcraft
 
-  nginx:
-    build: ./nginx/.
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
     ports:
-      - "80:80"
-    depends_on:
-      - nextjs
-    container_name: nginx
-    restart: always
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - overcraft
+
+networks:
+  overcraft:
+    name: overcraft

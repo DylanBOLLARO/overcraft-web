@@ -37,6 +37,8 @@ export const base_query_axios = async (api: any, postParams: any = null, useJwt:
             url: absoluteUrlApi(url + path),
             headers: {
                 Authorization: `Bearer ${jwt ?? ""}`,
+                'Content-Type': 'application/json',
+                'Accept': '*/*',
             },
             data: objPostParams,
         };
