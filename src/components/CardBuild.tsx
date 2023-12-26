@@ -24,9 +24,7 @@ export function CardBuild({
 		>
 			<div className="overflow-hidden rounded">
 				<Image
-					src={
-						"https://w0.peakpx.com/wallpaper/816/229/HD-wallpaper-francisco-joel-on-starcraft-starcraft-starcraft-2-space-warriors-starcraft-2-marine.jpg"
-					}
+					src={`/picture_build.png`}
 					alt={""}
 					width={width}
 					height={height}
