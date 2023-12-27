@@ -55,7 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 			<head />
 			<body
 				className={cn(
-					"h-[calc(100vh-49px)] bg-background font-sans antialiased",
+					"h-[calc(100vh-49px)] bg-background font-sans antialiased animate-fade animate-once animate-duration-[500ms] animate-ease-out",
 					fontSans.variable,
 					fontHeading.variable,
 				)}
@@ -67,7 +67,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 				>
 					<Navigation userId={userId} />
 					<main className="flex flex-row px-2 pb-2 gap-2 h-full">
-						{isLoading ? <p>Loading...</p> : children}
+						{!isLoading && children}
 					</main>
 					<Toaster />
 					<TailwindIndicator />

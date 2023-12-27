@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { marketingConfig } from "@/src/config/marketing";
+import { marketingConfig } from "@/src/config/navigation";
 import { cn } from "@/src/utils/utils";
 import { Button, buttonVariants } from "@/src/components/ui/button";
 import { ModeToggle } from "@/src/components/mode-toggle";

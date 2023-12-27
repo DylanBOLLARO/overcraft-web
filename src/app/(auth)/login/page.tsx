@@ -109,163 +109,175 @@ export default function LoginPage() {
 		} catch (error) {}
 	}
 
-	return isLoading ? (
-		<p>Loading...</p>
-	) : (
-		<div className="container flex flex-col items-center gap-5">
-			<Link
-				href={pagePath.HOME}
-				className={cn(
-					buttonVariants({ variant: "secondary" }),
-					"self-start",
-				)}
-			>
-				<>
-					<Icons.chevronLeft className="mr-2 h-4 w-4" />
-					Back
-				</>
-			</Link>
-			<Tabs defaultValue="signin" className="w-[500px] bg-">
-				<TabsList className="grid w-full grid-cols-2">
-					<TabsTrigger value="signin">Sign in</TabsTrigger>
-					<TabsTrigger value="signup">Sign up</TabsTrigger>
-				</TabsList>
-				<TabsContent value="signin">
-					<Card>
-						<CardHeader>
-							<CardTitle>Already a member ? Sign in !</CardTitle>
-							<CardDescription>
-								Fill in the fields below to create your account.
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="space-y-2">
-							<Form {...formSigninInstance}>
-								<form
-									onSubmit={formSigninInstance.handleSubmit(
-										onSigninSubmit,
-									)}
-									className="space-y-8"
-								>
-									<FormField
-										control={formSigninInstance.control}
-										name="email"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Email</FormLabel>
-												<FormControl>
-													<Input
-														type="email"
-														placeholder="skywalker@gmail.com"
-														{...field}
-													/>
-												</FormControl>
-
-												<FormMessage />
-											</FormItem>
+	return (
+		!isLoading && (
+			<div className="container flex flex-col items-center gap-5">
+				<Link
+					href={pagePath.HOME}
+					className={cn(
+						buttonVariants({ variant: "secondary" }),
+						"self-start",
+					)}
+				>
+					<>
+						<Icons.chevronLeft className="mr-2 h-4 w-4" />
+						Back
+					</>
+				</Link>
+				<Tabs defaultValue="signin" className="w-[500px] bg-">
+					<TabsList className="grid w-full grid-cols-2">
+						<TabsTrigger value="signin">Sign in</TabsTrigger>
+						<TabsTrigger value="signup">Sign up</TabsTrigger>
+					</TabsList>
+					<TabsContent value="signin">
+						<Card>
+							<CardHeader>
+								<CardTitle>
+									Already a member ? Sign in !
+								</CardTitle>
+								<CardDescription>
+									Fill in the fields below to create your
+									account.
+								</CardDescription>
+							</CardHeader>
+							<CardContent className="space-y-2">
+								<Form {...formSigninInstance}>
+									<form
+										onSubmit={formSigninInstance.handleSubmit(
+											onSigninSubmit,
 										)}
-									/>
+										className="space-y-8"
+									>
+										<FormField
+											control={formSigninInstance.control}
+											name="email"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>Email</FormLabel>
+													<FormControl>
+														<Input
+															type="email"
+															placeholder="skywalker@gmail.com"
+															{...field}
+														/>
+													</FormControl>
 
-									<FormField
-										control={formSigninInstance.control}
-										name="password"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Password</FormLabel>
-												<FormControl>
-													<Input
-														placeholder="**********"
-														type="password"
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+
+										<FormField
+											control={formSigninInstance.control}
+											name="password"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>
+														Password
+													</FormLabel>
+													<FormControl>
+														<Input
+															placeholder="**********"
+															type="password"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+
+										<Button type="submit">Submit</Button>
+									</form>
+								</Form>
+							</CardContent>
+						</Card>
+					</TabsContent>
+					<TabsContent value="signup">
+						<Card>
+							<CardHeader>
+								<CardTitle>
+									Become a member ! Sign up !
+								</CardTitle>
+								<CardDescription>
+									Fill in the fields below to create your
+									account.
+								</CardDescription>
+							</CardHeader>
+							<CardContent className="space-y-2">
+								<Form {...formSignupInstance}>
+									<form
+										onSubmit={formSignupInstance.handleSubmit(
+											onSignupSubmit,
 										)}
-									/>
+										className="space-y-8"
+									>
+										<FormField
+											control={formSignupInstance.control}
+											name="username"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>
+														Username
+													</FormLabel>
+													<FormControl>
+														<Input
+															placeholder="Skywalker"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
 
-									<Button type="submit">Submit</Button>
-								</form>
-							</Form>
-						</CardContent>
-					</Card>
-				</TabsContent>
-				<TabsContent value="signup">
-					<Card>
-						<CardHeader>
-							<CardTitle>Become a member ! Sign up !</CardTitle>
-							<CardDescription>
-								Fill in the fields below to create your account.
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="space-y-2">
-							<Form {...formSignupInstance}>
-								<form
-									onSubmit={formSignupInstance.handleSubmit(
-										onSignupSubmit,
-									)}
-									className="space-y-8"
-								>
-									<FormField
-										control={formSignupInstance.control}
-										name="username"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Username</FormLabel>
-												<FormControl>
-													<Input
-														placeholder="Skywalker"
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
+										<FormField
+											control={formSignupInstance.control}
+											name="email"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>Email</FormLabel>
+													<FormControl>
+														<Input
+															type="email"
+															placeholder="skywalker@gmail.com"
+															{...field}
+														/>
+													</FormControl>
 
-									<FormField
-										control={formSignupInstance.control}
-										name="email"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Email</FormLabel>
-												<FormControl>
-													<Input
-														type="email"
-														placeholder="skywalker@gmail.com"
-														{...field}
-													/>
-												</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
 
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
+										<FormField
+											control={formSignupInstance.control}
+											name="password"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>
+														Password
+													</FormLabel>
+													<FormControl>
+														<Input
+															placeholder="**********"
+															type="password"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
 
-									<FormField
-										control={formSignupInstance.control}
-										name="password"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Password</FormLabel>
-												<FormControl>
-													<Input
-														placeholder="**********"
-														type="password"
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-
-									<Button type="submit">Submit</Button>
-								</form>
-							</Form>
-						</CardContent>
-					</Card>
-				</TabsContent>
-			</Tabs>
-		</div>
+										<Button type="submit">Submit</Button>
+									</form>
+								</Form>
+							</CardContent>
+						</Card>
+					</TabsContent>
+				</Tabs>
+			</div>
+		)
 	);
 }

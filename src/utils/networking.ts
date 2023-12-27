@@ -79,6 +79,7 @@ export const get_connected_user_id = async () => {
         return user_id
     } catch (error) {
         console.log(JSON.stringify(error));
+        return undefined
     }
 
 };

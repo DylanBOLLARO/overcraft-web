@@ -5,7 +5,7 @@ services:
     build:
       context: .
     ports:
-      - 3000:3000
+      - "3000"
     container_name: nextjs
     restart: always
     networks:
