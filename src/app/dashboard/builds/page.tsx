@@ -9,9 +9,9 @@ import {
 	TabsList,
 	TabsTrigger,
 } from "@/src/components/ui/tabs";
-import { Grid2X2, Menu, RefreshCcw } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { STYLE_VIEW, VIEW, pagePath } from "@/src/constants/enum";
+import { VIEW } from "@/src/constants/enum";
 
 import { useRouter } from "next/navigation";
 import { CardBuild } from "@/src/components/CardBuild";

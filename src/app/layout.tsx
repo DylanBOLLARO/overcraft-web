@@ -55,7 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 			<head />
 			<body
 				className={cn(
-					"h-[calc(100vh-49px)] bg-background font-sans antialiased animate-fade animate-once animate-duration-[500ms] animate-ease-out",
+					"h-[calc(100vh-49px)] bg-background font-sans antialiased animate-fade animate-once animate-duration-[500ms] animate-ease-out ",
 					fontSans.variable,
 					fontHeading.variable,
 				)}

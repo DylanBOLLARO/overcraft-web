@@ -4,21 +4,10 @@ import { Separator } from "../components/ui/separator";
 import { CircleUserRound } from "lucide-react";
 
 export default function IndexPage() {
-	const fonc = [
-		"Création de profil utilisateur",
-		"Système permettant de mettre en avant les builds orders créés par les utilisateurs avec un système de like",
-		"Clonage de build order public afin de pouvoir les modifier",
-		"Notion de build order public et privé",
-		"Système de commentaires sous le build order ?",
-		"Ajout d&apos;explications entre les étapes de build ?",
-		"Unités de référence pour l&apos;exécution du build ? Temps, @100% unité -> Faire ->...",
-		"Logiciel d&apos;overlay (similaire à Discord) permettant l&apos;affichage en temps réel du build order pendant le jeu.",
-	];
-
 	return (
-		<main className="container pt-5">
+		<main className="container pt-5 ">
 			<div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-5 overflow-hidden text-justify text-lg">
-				<h2 className="font-heading text-7xl leading-[1.1] animate-fade animate-once animate-duration-[3000ms] animate-delay-[500ms] animate-ease-out">
+				<h2 className="font-heading text-7xl leading-[1.1] animate-fade animate-once animate-duration-[3000ms] animate-ease-out">
 					Welcome to{" "}
 					<span className="font-medium text-indigo-500">
 						OverCraft{" "}
