@@ -1,4 +1,4 @@
-import { cn } from "@/src/utils/utils";
+import { cn } from "@/src/lib/utils";
 import { Button } from "./ui/button";
 
 export function Sidebar() {

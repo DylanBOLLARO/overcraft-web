@@ -23,7 +23,7 @@ import {
 	FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { publish_connected_user_build } from "../utils/networking";
+import { publish_connected_user_build } from "../lib/networking";
 
 const formSchema = z.object({
 	name: z.string().min(2).max(50),
@@ -55,9 +55,9 @@ const DialogCreationNewBuild = ({ local_refresh_builds }: any) => {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline">
-					<PlusCircle className="mr-2 h-4 w-4" />
-					Add build
+				<Button variant="outline" className="gap-2">
+					<PlusCircle className="h-4 w-4" />
+					Create
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">

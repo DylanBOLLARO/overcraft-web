@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { siteConfig } from "@/src/config/site";
-import { cn } from "@/src/utils/utils";
+import { cn } from "@/src/lib/utils";
 import { pagePath } from "../constants/enum";
 
 export function MainNav({ items }: any) {
@@ -21,7 +21,7 @@ export function MainNav({ items }: any) {
 			</Link>
 			{items?.length && (
 				<nav className="flex gap-6 ">
-					{/* {items?.map((item: any, index: number) => (
+					{items?.map((item: any, index: number) => (
 						<Link
 							key={index}
 							href={item.disabled ? "#" : item.href}
@@ -36,7 +36,7 @@ export function MainNav({ items }: any) {
 						>
 							{item.title}
 						</Link>
-					))} */}
+					))}
 
 					<Link
 						href={`${pagePath.DASHBOARD}`}

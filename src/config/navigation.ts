@@ -7,9 +7,5 @@ export const marketingConfig: MarketingConfig = {
       title: "Documentation",
       href: pagePath.DOCUMENTATION,
     },
-    {
-      title: "Download",
-      href: pagePath.HOME,
-    },
   ],
 }

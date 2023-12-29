@@ -4,7 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 import localFont from "next/font/local";
 
 import "@/src/styles/globals.css";
-import { cn } from "@/src/utils/utils";
+import { cn } from "@/src/lib/utils";
 import { Toaster } from "@/src/components/ui/toaster";
 import { TailwindIndicator } from "@/src/components/tailwind-indicator";
 import { ThemeProvider } from "@/src/components/theme-provider";
@@ -14,7 +14,7 @@ import {
 	deleteCookie,
 	getCookie,
 	get_connected_user_id,
-} from "../utils/networking";
+} from "../lib/networking";
 import { usePathname } from "next/navigation";
 import router from "next/router";
 import { pagePath } from "../constants/enum";

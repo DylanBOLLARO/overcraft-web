@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { cn } from "@/src/utils/utils";
+import { cn } from "@/src/lib/utils";
 import { buttonVariants } from "@/src/components/ui/button";
 import { Icons } from "@/src/components/icons";
 import { Button } from "@/src/components/ui/button";
@@ -43,7 +43,7 @@ import {
 	get_connected_user_id,
 	signin,
 	signup,
-} from "../../../utils/networking";
+} from "../../../lib/networking";
 
 export default function LoginPage() {
 	const router = useRouter();

@@ -24,7 +24,7 @@ import {
 	add_step_build,
 	delete_step_in_build_steps,
 	move_step_in_build_steps,
-} from "@/src/utils/networking";
+} from "@/src/lib/networking";
 
 export function DataTable({
 	columns,

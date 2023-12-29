@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { marketingConfig } from "@/src/config/navigation";
-import { cn } from "@/src/utils/utils";
+import { cn } from "@/src/lib/utils";
 import { Button, buttonVariants } from "@/src/components/ui/button";
 import { ModeToggle } from "@/src/components/mode-toggle";
 
@@ -21,7 +21,7 @@ import {
 import { pagePath } from "../constants/enum";
 import { MainNav } from "../components/main-nav";
 import { useRouter } from "next/navigation";
-import { deleteCookie } from "../utils/networking";
+import { deleteCookie } from "../lib/networking";
 
 export default function NavigationBar({ userId }: any) {
 	const router = useRouter();

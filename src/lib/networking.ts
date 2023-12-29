@@ -96,7 +96,7 @@ export const get_connected_user_builds = async () => {
 export const publish_connected_user_build = async (build_metadata: any) => {
     try {
         const user_id = await get_connected_user_id();
-        await base_query_axios(PUBLISH_CONNECTED_USER_BUILD, {
+        return await base_query_axios(PUBLISH_CONNECTED_USER_BUILD, {
             ...build_metadata, user_id: '' + user_id
         }, true);
     } catch (error) {
@@ -139,6 +139,25 @@ export const move_step_in_build_steps = async (data: any) => {
 export const delete_step_in_build_steps = async (id: number) => {
     try {
         await base_query_axios(DELETE_STEP_IN_BUILD_STEPS, null, true, "/" + id);
+    } catch (error) {
+        console.log(JSON.stringify(error));
+    }
+};
+
+export const import_build = async (e: any) => {
+    try {
+        const { steps, ...build } = JSON.parse(e);
+        const { id: build_id } = await publish_connected_user_build(build)
+        steps.map(async (step: any, index: number) => {
+            const { description, timer, population } = step
+            await add_step_build({
+                description,
+                build_id: "" + build_id,
+                position: "" + index + 1,
+                timer: '' + timer,
+                population: "" + population,
+            });
+        })
     } catch (error) {
         console.log(JSON.stringify(error));
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { get_connected_user_id } from "../../utils/networking";
+import { get_connected_user_id } from "../../lib/networking";
 import { pagePath } from "@/src/constants/enum";
 import { usePathname, useRouter } from "next/navigation";
 
