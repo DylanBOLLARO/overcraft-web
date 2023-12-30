@@ -49,3 +49,18 @@ export const DELETE_STEP_IN_BUILD_STEPS = {
     method: VERBES_HTTP.DELETE,
     url: `${MODULE_NESTJS.BUILD_STEP}`,
 };
+
+export const PATCH_BUILD = {
+    method: VERBES_HTTP.PATCH,
+    url: `${MODULE_NESTJS.BUILD}`,
+};
+
+export const GET_ALL_PUBLICS_BUILDS = {
+    method: VERBES_HTTP.GET,
+    url: `${MODULE_NESTJS.BUILD}`,
+};
+
+export const GET_PUBLIC_BUILD_BY_ID = {
+    method: VERBES_HTTP.GET,
+    url: `${MODULE_NESTJS.BUILD}`,
+};

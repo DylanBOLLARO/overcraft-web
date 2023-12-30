@@ -9,16 +9,14 @@ import {
 	TabsList,
 	TabsTrigger,
 } from "@/src/components/ui/tabs";
-import { Download, RefreshCcw } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { VIEW } from "@/src/constants/enum";
 
 import { CardBuild } from "@/src/components/CardBuild";
-import { get_connected_user_builds, import_build } from "@/src/lib/networking";
-import DialogCreationNewBuild from "@/src/components/DialogCreationNewBuild";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { jsonFileUpload } from "@/src/lib/utils";
+import { get_connected_user_builds } from "@/src/lib/networking";
+import { DialogCreateBuild } from "@/src/components/DialogCreateBuild";
+import { ImportButton } from "@/src/components/ImportButton";
 
 export default function Page() {
 	const [userBuilds, setUserBuilds] = useState<any>(null);
@@ -38,11 +36,7 @@ export default function Page() {
 	};
 
 	useEffect(() => {
-		(async () => {
-			try {
-				local_refresh_builds();
-			} catch (error: any) {}
-		})();
+		local_refresh_builds();
 	}, []);
 
 	return (
@@ -75,39 +69,10 @@ export default function Page() {
 						Refresh
 					</Button>
 
-					<DialogCreationNewBuild
+					<DialogCreateBuild
 						local_refresh_builds={local_refresh_builds}
 					/>
-					<div>
-						<Input
-							id="btn-import"
-							type="file"
-							className="hidden"
-							onChange={(e) => {
-								jsonFileUpload(e)
-									.then((parsedJson) => {
-										import_build(
-											JSON.stringify(parsedJson),
-										);
-									})
-									.then(() => {
-										local_refresh_builds();
-									})
-									.catch((error) => {
-										console.error(error);
-									});
-								e.target.value = "";
-							}}
-						/>
-
-						<Label
-							htmlFor="btn-import"
-							className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-2 cursor-pointer"
-						>
-							<Download className="h-4 w-4" />
-							<p>Import</p>
-						</Label>
-					</div>
+					<ImportButton local_refresh_builds={local_refresh_builds} />
 				</div>
 				<TabsContent
 					value={`${VIEW.BUILD}`}

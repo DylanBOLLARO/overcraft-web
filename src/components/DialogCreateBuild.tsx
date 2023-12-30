@@ -29,7 +29,7 @@ const formSchema = z.object({
 	name: z.string().min(2).max(50),
 });
 
-const DialogCreationNewBuild = ({ local_refresh_builds }: any) => {
+export const DialogCreateBuild = ({ local_refresh_builds }: any) => {
 	const [open, setOpen] = React.useState(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -100,5 +100,3 @@ const DialogCreationNewBuild = ({ local_refresh_builds }: any) => {
 		</Dialog>
 	);
 };
-
-export default DialogCreationNewBuild;

@@ -12,7 +12,7 @@ export enum STYLE_VIEW {
 export enum pagePath {
     HOME = "/",
     DOCUMENTATION = "/documentation",
-    FAQ = "/faq",
+    BUILDS = "/builds",
     DASHBOARD = "/dashboard/builds",
     SIGNIN = "/login",
     UPDATE = "/update",
