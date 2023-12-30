@@ -31,6 +31,8 @@ const Page = () => {
 		get_all_public_builds();
 	}, []);
 
+		if (!allBuilds) return <></>;
+
 	return (
 		<Tabs defaultValue="all" className="flex-1">
 			<TabsList className="flex mx-auto max-w-min">
